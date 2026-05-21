@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReboqueFácil — Guincho & Reboque 24h</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0d0d0d;
+      --dark:    #141414;
+      --surface: #1c1c1c;
+      --border:  #2a2a2a;
+      --amber:   #f59e0b;
+      --amber-h: #fbbf24;
+      --red:     #dc2626;
+      --white:   #f5f5f0;
+      --muted:   #9ca3af;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+      --radius: 4px;
+      --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== UTILITY ===== */
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .tag {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      padding: 4px 12px;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .section-title span { color: var(--amber); }
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      margin-top: 12px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 14px 28px;
+    }
+    .btn-primary {
+      background: var(--amber);
+      color: var(--black);
+    }
+    .btn-primary:hover { background: var(--amber-h); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,.35); }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+    .btn-whatsapp {
+      background: #25d366;
+      color: #fff;
+    }
+    .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.3); }
+    .btn-lg { padding: 18px 40px; font-size: 17px; }
+
+    /* ===== HEADER ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .logo span { color: var(--amber); }
+    nav { display: flex; align-items: center; gap: 32px; }
+    nav a {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    nav a:hover { color: var(--white); }
+    .header-cta { display: flex; align-items: center; gap: 12px; }
+    .phone-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--amber);
+      text-decoration: none;
+    }
+    .phone-badge svg { width: 18px; height: 18px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 72px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://placehold.co/1600x900/1a1a1a/333?text=Guincho+em+Ação') center/cover no-repeat;
+      filter: brightness(0.25);
+    }
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.4) 60%, transparent 100%);
+    }
+    .hero-badge {
+      position: absolute;
+      top: 120px; right: 40px;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: var(--amber);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation: spin-slow 20s linear infinite;
+    }
+    .hero-badge-inner {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--black);
+      line-height: 1.2;
+    }
+    .hero-badge-inner strong { font-size: 36px; display: block; line-height: 1; }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+
+    .hero-content { position: relative; z-index: 2; padding: 80px 0; }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .hero-dot {
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.7; }
+    }
+    .hero-eyebrow span {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 8vw, 100px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-title .line-accent { color: var(--amber); }
+    .hero-title .line-outline {
+      -webkit-text-stroke: 1.5px var(--white);
+      color: transparent;
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: rgba(245,245,240,0.7);
+      max-width: 480px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .hero-stats {
+      position: relative; z-index: 2;
+      display: flex;
+      gap: 0;
+      margin-top: 80px;
+      border-top: 1px solid var(--border);
+      padding-top: 40px;
+    }
+    .stat-item {
+      flex: 1;
+      padding: 0 32px 0 0;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
+    .stat-item:first-child { padding-left: 0; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--amber);
+    }
+    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* ===== SERVICES ===== */
+    .section { padding: 100px 0; }
+    .section-header { margin-bottom: 64px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .service-card {
+      background: var(--dark);
+      padding: 48px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: default;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { background: #1e1e1e; }
+    .service-icon {
+      width: 56px; height: 56px;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.25);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      font-size: 26px;
+      transition: var(--transition);
+    }
+    .service-card:hover .service-icon { background: rgba(245,158,11,0.2); border-color: var(--amber); }
+    .service-num {
+      position: absolute;
+      top: 24px; right: 28px;
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 900;
+      color: rgba(245,158,11,0.05);
+      line-height: 1;
+      pointer-events: none;
+      transition: var(--transition);
+    }
+    .service-card:hover .service-num { color: rgba(245,158,11,0.1); }
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .service-desc { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+    /* ===== WHY US ===== */
+    .why-section { background: var(--surface); padding: 100px 0; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .why-image {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+    .why-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85);
+    }
+    .why-image-badge {
+      position: absolute;
+      bottom: 24px; left: 24px;
+      background: var(--amber);
+      color: var(--black);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+    }
+    .why-list { margin-top: 40px; display: flex; flex-direction: column; gap: 0; }
+    .why-item {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .why-item:first-child { border-top: 1px solid var(--border); }
+    .why-item:hover { padding-left: 8px; }
+    .why-check {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: rgba(245,158,11,0.1);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--amber);
+      margin-top: 2px;
+    }
+    .why-text strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+    .why-text p { font-size: 14px; color: var(--muted); }
+
+    /* ===== COVERAGE ===== */
+    .coverage-section { padding: 100px 0; }
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .map-placeholder {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://placehold.co/600x450/1c1c1c/2a2a2a?text=Mapa+de+Cobertura') center/cover no-repeat;
+      opacity: 0.5;
+    }
+    .map-label {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .cities-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .city-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      color: var(--muted);
+      transition: var(--transition);
+    }
+    .city-tag:hover { border-color: var(--amber); color: var(--white); }
+    .city-dot { width: 6px; height: 6px; background: var(--amber); border-radius: 50%; flex-shrink: 0; }
+
+    /* ===== TESTIMONIALS ===== */
+    .testi-section { background: var(--surface); padding: 100px 0; }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+    .testi-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      position: relative;
+      transition: var(--transition);
+    }
+    .testi-card:hover { border-color: rgba(245,158,11,0.4); transform: translateY(-4px); }
+    .testi-quote {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--amber);
+      line-height: 0.6;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .testi-text {
+      font-size: 15px;
+      color: rgba(245,245,240,0.8);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .testi-stars { color: var(--amber); font-size: 14px; margin-bottom: 20px; letter-spacing: 2px; }
+    .testi-author { display: flex; align-items: center; gap: 14px; }
+    .testi-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--border);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .testi-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .testi-name { font-family: var(--font-display); font-size: 15px; font-weight: 700; text-transform: uppercase; }
+    .testi-role { font-size: 13px; color: var(--muted); }
+
+    /* ===== CONTACT ===== */
+    .contact-section { padding: 100px 0; }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
+    .contact-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .contact-icon {
+      width: 48px; height: 48px;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.25);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .contact-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+    .contact-value { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--white); }
+    .contact-value a { color: inherit; text-decoration: none; }
+    .contact-value a:hover { color: var(--amber); }
+
+    /* FORM */
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      outline: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--amber); }
+    .form-group select option { background: var(--surface); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit { margin-top: 8px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-brand p { font-size: 15px; color: var(--muted); margin-top: 16px; max-width: 300px; line-height: 1.7; }
+    .footer-col h4 {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a {
+      font-size: 15px;
+      color: rgba(245,245,240,0.7);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: var(--amber); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ===== FLOATING WHATSAPP ===== */
+    .wa-float {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      z-index: 200;
+      width: 60px; height: 60px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+      text-decoration: none;
+      animation: float 3s ease-in-out infinite;
+    }
+    .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .wa-tooltip {
+      position: absolute;
+      right: 72px;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+
+    /* ===== MOBILE NAV ===== */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 16px 24px 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color var(--transition);
+    }
+    .mobile-menu a:last-of-type { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--amber); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { gap: 48px; }
+      .coverage-grid { gap: 48px; }
+      .testi-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      nav, .phone-badge { display: none; }
+      .hamburger { display: flex; }
+      .hero-badge { display: none; }
+      .stat-item { padding: 0 20px; }
+      .stat-num { font-size: 40px; }
+      .why-grid { grid-template-columns: 1fr; }
+      .why-image { aspect-ratio: 16/9; }
+      .coverage-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (max-width: 640px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 24px; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 24px; }
+      .stat-item:last-child { border-bottom: none; padding: 24px 0 0; }
+      .cities-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="#" class="logo">Reboque<span>Fácil</span></a>
+      <nav>
+        <a href="#servicos">Serviços</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#cobertura">Cobertura</a>
+        <a href="#depoimentos">Avaliações</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="header-cta">
+        <a href="tel:+5584999990000" class="phone-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.92 2.18 2 2 0 012.88 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+          (84) 99999-0000
+        </a>
+        <a href="https://wa.me/5584999990000" class="btn btn-primary" target="_blank">Solicitar Agora</a>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#servicos" onclick="toggleMenu()">Serviços</a>
+    <a href="#diferenciais" onclick="toggleMenu()">Diferenciais</a>
+    <a href="#cobertura" onclick="toggleMenu()">Cobertura</a>
+    <a href="#depoimentos" onclick="toggleMenu()">Avaliações</a>
+    <a href="#contato" onclick="toggleMenu()">Contato</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-gradient"></div>
+
+  <div class="hero-badge">
+    <div class="hero-badge-inner">
+      <strong>24h</strong>
+      Atendimento<br>Todo Dia
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-dot"></div>
+        <span>Serviço disponível agora • Mossoró e região</span>
+      </div>
+      <h1 class="hero-title">
+        Guincho<br>
+        <span class="line-accent">rápido</span> e<br>
+        <span class="line-outline">confiável</span>
+      </h1>
+      <p class="hero-sub">
+        Atendimento emergencial 24 horas por dia, 7 dias por semana.
+        Frota moderna, motoristas treinados e chegamos onde você estiver.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5584999990000" class="btn btn-whatsapp btn-lg" target="_blank">
+          <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chamar pelo WhatsApp
+        </a>
+        <a href="tel:+5584999990000" class="btn btn-outline btn-lg">
+          <svg style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.92 2.18 2 2 0 012.88 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+          Ligar Agora
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">+12k</div>
+          <div class="stat-label">Atendimentos realizados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">24h</div>
+          <div class="stat-label">Disponibilidade total</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Clientes satisfeitos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">30'</div>
+          <div class="stat-label">Tempo médio de chegada</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="servicos">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="tag">O que fazemos</span>
+      <h2 class="section-title">Nossos <span>Serviços</span></h2>
+      <p class="section-sub">Solução completa para qualquer situação na estrada. Atendemos veículos leves, pesados e motocicletas.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-icon">🚗</div>
+        <div class="service-num">01</div>
+        <h3 class="service-name">Guincho para Veículos Leves</h3>
+        <p class="service-desc">Atendimento rápido para carros de passeio, SUVs e caminhonetes. Segurança total no transporte do seu veículo até a oficina de sua preferência.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🚛</div>
+        <div class="service-num">02</div>
+        <h3 class="service-name">Reboque para Veículos Pesados</h3>
+        <p class="service-desc">Equipamentos de grande porte para transporte de caminhões, ônibus e veículos pesados. Frota especial com capacidade para cargas acima de 10 toneladas.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🏍️</div>
+        <div class="service-num">03</div>
+        <h3 class="service-name">Guincho para Motos</h3>
+        <p class="service-desc">Atendimento especializado para motocicletas com plataforma própria, garantindo o transporte seguro sem riscos de danos à sua moto.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🛣️</div>
+        <div class="service-num">04</div>
+        <h3 class="service-name">Reboque de Longa Distância</h3>
+        <p class="service-desc">Transporte interestaduais e longas distâncias com rastreamento em tempo real. Motoristas experientes e veículos equipados para viagens seguras.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🔧</div>
+        <div class="service-num">05</div>
+        <h3 class="service-name">Pane Seca & Socorro</h3>
+        <p class="service-desc">Abastecimento emergencial em caso de pane seca, troca de pneus, recarga de bateria e assistência básica para você seguir viagem sem precisar de reboque.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🚧</div>
+        <div class="service-num">06</div>
+        <h3 class="service-name">Remoção Após Acidente</h3>
+        <p class="service-desc">Equipe treinada para remoção segura após acidentes de trânsito, coordenando com seguradoras e delegacias para desburocratizar o processo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="diferenciais">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-image fade-up">
+        <img src="https://placehold.co/640x480/1a1a1a/333?text=Nossa+Frota+Moderna" alt="Frota de guincho moderna" />
+        <div class="why-image-badge">⭐ Nota 4.9 no Google</div>
+      </div>
+      <div class="fade-up">
+        <span class="tag">Por que nos escolher</span>
+        <h2 class="section-title">A diferença que <span>você sente</span></h2>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="why-text">
+              <strong>Resposta em até 30 minutos</strong>
+              <p>Nossa central de atendimento localiza o guincho mais próximo de você em segundos, garantindo o menor tempo de espera possível.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="why-text">
+              <strong>Frota 100% moderna e rastreada</strong>
+              <p>Veículos com manutenção em dia, rastreamento GPS e câmeras de segurança para acompanhar seu carro em tempo real.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="why-text">
+              <strong>Motoristas certificados e treinados</strong>
+              <p>Toda nossa equipe passa por treinamento contínuo e possui certificação para manobras seguras em qualquer tipo de veículo.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="why-text">
+              <strong>Preço justo e transparente</strong>
+              <p>Sem cobranças surpresa. Orçamento informado antes do atendimento. Aceitamos todas as seguradoras e formas de pagamento.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section class="coverage-section" id="cobertura">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="tag">Área de atendimento</span>
+      <h2 class="section-title">Cobertura <span>regional</span></h2>
+      <p class="section-sub">Atendemos Mossoró e mais de 20 municípios do estado do Rio Grande do Norte com equipes localizadas estrategicamente.</p>
+    </div>
+    <div class="coverage-grid">
+      <div class="map-placeholder fade-up">
+        <div class="map-label">📍 Mapa de Cobertura</div>
+        <p style="position:relative;z-index:1;font-size:13px;color:var(--muted);text-align:center;padding:0 32px">Substitua esta área por um Google Maps embedado com sua região de atendimento</p>
+      </div>
+      <div class="fade-up">
+        <h3 style="font-family:var(--font-display);font-size:24px;font-weight:700;text-transform:uppercase;margin-bottom:8px">Cidades Atendidas</h3>
+        <p style="font-size:15px;color:var(--muted);margin-bottom:24px">Cobertura 24h em toda a região. Para cidades não listadas, entre em contato.</p>
+        <div class="cities-grid">
+          <div class="city-tag"><div class="city-dot"></div>Mossoró</div>
+          <div class="city-tag"><div class="city-dot"></div>Natal</div>
+          <div class="city-tag"><div class="city-dot"></div>Açu</div>
+          <div class="city-tag"><div class="city-dot"></div>Apodi</div>
+          <div class="city-tag"><div class="city-dot"></div>Pau dos Ferros</div>
+          <div class="city-tag"><div class="city-dot"></div>Caicó</div>
+          <div class="city-tag"><div class="city-dot"></div>Currais Novos</div>
+          <div class="city-tag"><div class="city-dot"></div>Areia Branca</div>
+          <div class="city-tag"><div class="city-dot"></div>Serra do Mel</div>
+          <div class="city-tag"><div class="city-dot"></div>Baraúna</div>
+          <div class="city-tag"><div class="city-dot"></div>Upanema</div>
+          <div class="city-tag"><div class="city-dot"></div>+ 10 cidades</div>
+        </div>
+        <div style="margin-top:32px;padding:24px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:var(--radius)">
+          <p style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:6px">🛣️ Rodovias cobertas</p>
+          <p style="font-size:14px;color:var(--muted)">BR-304 · BR-110 · BR-226 · RN-015 · RN-118 e ramais principais da região.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section" id="depoimentos">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="tag">Depoimentos</span>
+      <h2 class="section-title">O que dizem <span>nossos clientes</span></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card fade-up">
+        <span class="testi-quote">"</span>
+        <p class="testi-text">Meu carro quebrou na BR-304 às 2 da manhã. Em menos de 25 minutos o guincho chegou. Motorista super educado e profissional. Salvou minha vida naquela noite!</p>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-author">
+          <div class="testi-avatar"><img src="https://placehold.co/44x44/2a2a2a/555?text=MR" alt="Marco R." /></div>
+          <div>
+            <div class="testi-name">Marco Rodrigues</div>
+            <div class="testi-role">Motorista autônomo · Mossoró</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-up">
+        <span class="testi-quote">"</span>
+        <p class="testi-text">Usei o serviço pelo seguro e foi perfeito. A empresa atende a todas as seguradoras e o processo foi ágil do início ao fim. Meu carro chegou na oficina sem nenhum arranhão.</p>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-author">
+          <div class="testi-avatar"><img src="https://placehold.co/44x44/2a2a2a/555?text=AC" alt="Ana C." /></div>
+          <div>
+            <div class="testi-name">Ana Carolina Lima</div>
+            <div class="testi-role">Profissional liberal · Natal</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card fade-up">
+        <span class="testi-quote">"</span>
+        <p class="testi-text">Precisei de reboque de longa distância até Fortaleza. Serviço impecável, acompanhei tudo pelo rastreamento e o preço foi bem abaixo do que esperava. Recomendo demais!</p>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-author">
+          <div class="testi-avatar"><img src="https://placehold.co/44x44/2a2a2a/555?text=JS" alt="João S." /></div>
+          <div>
+            <div class="testi-name">João Sérgio Neto</div>
+            <div class="testi-role">Empresário · Apodi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contato">
+  <div class="container">
+    <div class="contact-wrapper">
+      <div class="fade-up">
+        <span class="tag">Fale conosco</span>
+        <h2 class="section-title">Precisou, <span>ligou.</span></h2>
+        <p class="section-sub" style="margin-top:16px">Atendemos 24 horas por dia, todos os dias do ano. Não deixe você esperando.</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">Telefone / WhatsApp</div>
+              <div class="contact-value"><a href="tel:+5584999990000">(84) 99999-0000</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+              <div class="contact-label">E-mail</div>
+              <div class="contact-value"><a href="mailto:contato@reboquefacil.com.br">contato@reboquefacil.com.br</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Localização</div>
+              <div class="contact-value">Mossoró, RN — Brasil</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <div class="contact-label">Funcionamento</div>
+              <div class="contact-value">24h por dia, 7 dias por semana</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px 36px">
+          <h3 style="font-family:var(--font-display);font-size:22px;font-weight:700;text-transform:uppercase;margin-bottom:8px">Solicite um orçamento</h3>
+          <p style="font-size:14px;color:var(--muted);margin-bottom:28px">Responderemos em instantes pelo WhatsApp.</p>
+          <div class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" placeholder="Seu nome completo" />
+              </div>
+              <div class="form-group">
+                <label for="tel">Telefone</label>
+                <input type="tel" id="tel" placeholder="(84) 99999-9999" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="servico">Tipo de Serviço</label>
+              <select id="servico">
+                <option value="">Selecione o serviço...</option>
+                <option>Guincho para veículo leve</option>
+                <option>Reboque para veículo pesado</option>
+                <option>Guincho para moto</option>
+                <option>Reboque de longa distância</option>
+                <option>Pane seca / Socorro</option>
+                <option>Remoção após acidente</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="local">Localização Atual</label>
+              <input type="text" id="local" placeholder="Rua, bairro ou ponto de referência" />
+            </div>
+            <div class="form-group">
+              <label for="msg">Detalhes (opcional)</label>
+              <textarea id="msg" placeholder="Descreva brevemente a situação do veículo..."></textarea>
+            </div>
+            <div class="form-submit">
+              <a href="https://wa.me/5584999990000?text=Olá!%20Gostaria%20de%20solicitar%20um%20serviço%20de%20guincho." class="btn btn-whatsapp btn-lg" target="_blank" style="width:100%;justify-content:center">
+                <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Enviar pelo WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">Reboque<span>Fácil</span></a>
+        <p>Serviço de guincho e reboque profissional em Mossoró e região. Atendimento 24 horas com frota moderna e motoristas certificados.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="#servicos">Veículos Leves</a></li>
+          <li><a href="#servicos">Veículos Pesados</a></li>
+          <li><a href="#servicos">Motocicletas</a></li>
+          <li><a href="#servicos">Longa Distância</a></li>
+          <li><a href="#servicos">Socorro Mecânico</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+5584999990000">(84) 99999-0000</a></li>
+          <li><a href="https://wa.me/5584999990000" target="_blank">WhatsApp</a></li>
+          <li><a href="mailto:contato@reboquefacil.com.br">E-mail</a></li>
+          <li><a href="#cobertura">Área de cobertura</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 ReboqueFácil. Todos os direitos reservados.</span>
+      <span>CNPJ: 00.000.000/0001-00 · Mossoró, RN</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/5584999990000" class="wa-float" target="_blank" title="Falar no WhatsApp">
+  <div class="wa-tooltip">Chamar no WhatsApp</div>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    const m = document.getElementById('mobileMenu');
+    m.classList.toggle('open');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // stagger siblings
+        const siblings = entry.target.parentElement.querySelectorAll('.fade-up');
+        siblings.forEach((el, idx) => {
+          if (!el.classList.contains('visible')) {
+            setTimeout(() => el.classList.add('visible'), idx * 80);
+          }
+        });
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Smooth header on scroll
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    header.style.borderBottomColor = window.scrollY > 40 ? 'rgba(245,158,11,0.15)' : 'var(--border)';
+  });
+</script>
+</body>
+</html>
